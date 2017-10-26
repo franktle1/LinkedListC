@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//France Le
-//FL193361
-//Wed 0415-510
+
 int main()
 {
     struct node{
