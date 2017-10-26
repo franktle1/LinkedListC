@@ -1,0 +1,43 @@
+Accepts command from user using stdin and stdout
+Must continue to loop until user enters sentinel value
+Output written in console
+
+Linked List program
+Using nodes structs in C
+each struct will contain:
+character array [255] (at most)
+an unsigned integer (positive int greater than 1)
+A pointer to the next node
+
+string will be referred to text and index for the node
+
+linked list is empty at first
+
+REQUIREMENTS
+
+the index is a number of hte node in the list (ie first node is index 1). When the list is scanned from the beginneing to end, the value increases
+
+the texts appearing in teh list are all distinct, no two nodes have the same text
+
+USER ENTERED COMMANDS - must have a separate function for each
+-> ina <index> <string user enters[255]> (insert after)
+-> inb <index> <string user enteres[255]> (insert before)
+-> del <index> deletes node (delete)
+-> rep <num> <string user enters [255]> (replace)
+-> prn (print list)
+-> end (ends program)
+
+command names are case-sensitive
+Assume that when commands are entered, there is a space between each argument
+
+
+
+
+-> ina <index> <string user enters[255]> (insert after)
+insert after command: 
+Every time a new node is added, indexes of list must change as well
+Message to console: "OKAY"
+No duplicates: If user enter dupes, "Such text exists already" pops up
+
+
+-> 
