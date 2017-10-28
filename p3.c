@@ -2,14 +2,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-int main()
-{
-    struct node{
+
+struct node{
         int listIndex;
         char text[255];
         struct node *next;
 
-    } *head, *tail;
+    };
+
+
+int main()
+{
+    void insert_node_after(struct node**, struct node**, int, char*);
+
+    struct node *head, *tail;
+
     head = tail = NULL; //sets head and tail to null
 
     char usrcmd[4];
@@ -23,6 +30,8 @@ int main()
     fflush(stdout);
     scanf("%s",usrcmd);
     if(strcmp("end",usrcmd)== 0){
+        printf("Good bye!");
+        fflush(stdout);
         free(userin);
         exit(1);
     }
@@ -34,21 +43,65 @@ int main()
 
     while(strcmp("end",usrcmd)!= 0){
         //functions go here
-        printf("the index: %d\nthe text: %s\n", index, userin);
+        if(strcmp("ina",usrcmd) == 0){
+            insert_node_after(&head,&tail,index, userin);
+
+            printf("Insert after\n");
+
+        }
+        else if(strcmp("inb",usrcmd) == 0){
+            printf("Insert before\n");
+        }
+        else if(strcmp("del",usrcmd) == 0){
+            printf("deleted!! woo\n");
+        }
+        else if(strcmp("rep",usrcmd) == 0){
+            printf("replaced!! woo\n");
+        }
+        else if(strcmp("prn",usrcmd) == 0){
+            printf("printed! woo\n");
+        }
+        else{
+            printf("Please enter an appropriate command:\nOptions:[ina] [inb] [del] [rep] [prn] [end]\n");
+        }
+
+
+        printf("Command: ");
         fflush(stdout);
         scanf("%s",usrcmd);
         if(strcmp("end",usrcmd)== 0){ //exits immediately after entering end by itself
+            printf("Good bye!");
+            fflush(stdout);
             free(userin);
             exit(1);}
         scanf("%d%s",&index,userin);
-    }
+    }//end of while
 
 
     free(userin);
+    printf("Good bye!");
+    fflush(stdout);
+
     return 0;
 }
 
+void insert_node_after (struct node **h, struct node **t, int x, char* strArr) {
+    struct node* newNode = (struct node*)malloc(sizeof(struct node));
+    if(newNode == NULL){
+        printf("Node allocation failed.\n");
+        exit(1);}
+    newNode->listIndex = x;
+    newNode->text = strArr;
 
+
+}
+
+//passes pointers to the head pointer, pointers to the tail pointer, the index, and the string
+/*
+void incrementIndex(){
+    counter++;
+}
+*/
 
 
 /*
@@ -56,10 +109,7 @@ int main()
 DON'T FORGET THE PROTOTYPES!
 
 
-void insertAfter(int x, char *strArr){
 
-
-}
 
 
 void insertBefore(int x, char *strArr){
