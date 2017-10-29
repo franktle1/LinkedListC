@@ -13,11 +13,11 @@ struct node{
 
 int main()
 {
-    void insert_node_after(struct node**, struct node**, int, char*);
+    void insert_node_after(struct node**, struct node**, struct node**, int, char*);
 
-    struct node *head, *tail;
+    struct node *head, *tail, *root;
 
-    head = tail = NULL; //sets head and tail to null
+    root = head = tail = NULL; //sets head and tail to null
 
     char usrcmd[4];
     char *userin; //I've got to find a way to parse it in the scan function.
@@ -44,7 +44,7 @@ int main()
     while(strcmp("end",usrcmd)!= 0){
         //functions go here
         if(strcmp("ina",usrcmd) == 0){
-            insert_node_after(&head,&tail,index, userin);
+            insert_node_after(&root,&head,&tail,index, userin);
 
             printf("Insert after\n");
 
@@ -85,16 +85,100 @@ int main()
     return 0;
 }
 
-void insert_node_after (struct node **h, struct node **t, int x, char* strArr) {
+void insert_node_after (struct node **root, struct node **h, struct node **t, int x, char* strArr) {
     struct node* newNode = (struct node*)malloc(sizeof(struct node));
+    newNode->next = NULL;
     if(newNode == NULL){
         printf("Node allocation failed.\n");
         exit(1);}
-    newNode->listIndex = x;
-    newNode->text = strArr;
+
+    strcpy(newNode->text,strArr); //copies the entered string into newNode text member
+    if(*h==NULL){ //if head points to null and list is empty
+        *root = *h = *t = newNode;
+        newNode->listIndex = 1; //first node has index of one
+    }
+
+    else{
+        struct node *curr = NULL; //i may need to allocate memory for curr
+        curr = *root; //curr will traverse the list
+        while(curr != NULL){
+            if(curr->listIndex == x && curr == *t){ //this should take care of sizeof 1 lists, and tail cases
+                (*t)->next = newNode; //sets tail's next pointer pointing to the new Node
+                (*t) = newNode; //sets tail pointing to the newNode
+                newNode->listIndex = (++x);
+
+            }
+            else if(curr->listIndex == x && curr != *t){ //middle of the list
+                newNode->next = curr->next;
+                curr->next = newNode;
+                newNode->listIndex = (++x);
+                                //find a way to increment the rest of the list
+                while(curr != NULL){ //traverse the rest of the list and increase the list index for each node
+                    curr = curr->next;
+                    ++(curr->listIndex);
+                }//while
+            }//elseif
+            if (curr!=NULL)
+                curr = curr->next;              //traverse the list
+
+            /*else{ //end of the list
+                *curr->next = newNode;
+                *t = newNode;
+                newNode->listIndex = (++x);
+            }
+ /*
+        struct node **curr = NULL;
+        *curr = *root; //curr will traverse the list
+        while(*curr != NULL){
+            if((*curr->listIndex) == x &&((*curr->listIndex) == *t->listIndex)){ //this should take care of sizeof 1 lists, and tail cases
+                *t = newNode;
+                *curr->next = newNode;
+                newNode->listIndex = (++x);
+
+            }
+            else if((*curr->listIndex) == x && (*curr->listIndex != *t->listIndex)){ //middle of the list
+                newNode->next = *curr->next;
+                *curr->next = newNode;
+                newNode->listIndex = (++x);
 
 
-}
+            }
+            *curr = *curr->next;
+*/
+//
+            /*else{ //end of the list
+                *curr->next = newNode;
+                *t = newNode;
+                newNode->listIndex = (++x);
+            }
+            */
+             //this increments the index of
+
+                  /*
+    The list exists:
+
+    Case 1:
+        When there's just one node, change pointer have pointer point to tail
+    Case 2:
+        When inserting into the middle of the list (more than one)
+        traverse list (while *curr != NULL) {if((x) == (*curr->listIndex)) set newNode point to *curr->next, set }
+    Case 3:
+        else
+        When inserting at the end, where x ==(*t->listIndex), set newNode->*next = NULL and *curr->next = newNode
+    */
+        }//WHILE
+
+
+
+    }//ELSE
+
+
+
+
+
+}//INSERT AFTER
+
+
 
 //passes pointers to the head pointer, pointers to the tail pointer, the index, and the string
 /*
